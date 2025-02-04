@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - PYSH</title>
+    <style>
+        body {
+            background-color: #FFFACD; /* Light Yellow Background */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .header {
+            font-size: 2rem;
+            font-weight: bold;
+            padding: 20px;
+        }
+
+        .clothing-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .clothing-item {
+            background-color: white;
+            width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            padding: 10px;
+        }
+
+        .clothing-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .clothing-item h3 {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .price {
+            color: #ff5733;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: gray;
+            font-size: 14px;
+        }
+
+        .discount {
+            color: green;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .add-to-cart {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .add-to-cart:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">Welcome to PYSH Store</div>
+
+    <div class="clothing-section">
+        <div class="clothing-item">
+            <img src="E:\PYSH\Shirt 1.jpeg" alt="Shirt 1">
+            <h3>Ivory Dobby Striped Shirt</h3>
+            <p class="price">₹659 <span class="old-price">₹1,649</span> <span class="discount">60% OFF</span></p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="clothing-item">
+            <img src="E:\PYSH\Shirt 2.jpeg" alt="Shirt 2">
+            <h3>Tea Green Horizontal Striped Shirt</h3>
+            <p class="price">₹659 <span class="old-price">₹1,649</span> <span class="discount">60% OFF</span></p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="clothing-item">
+            <img src="E:\PYSH\shirt3.jpeg" alt="Shirt 3">
+            <h3>Beige Ethnic Pattern Shirt</h3>
+            <p class="price">₹799 <span class="old-price">₹1,999</span> <span class="discount">60% OFF</span></p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="clothing-item">
+            <img src="E:\PYSH\shirt4.jpeg" alt="Shirt 4">
+            <h3>Pink Striped Shirt</h3>
+            <p class="price">₹699 <span class="old-price">₹1,799</span> <span class="discount">60% OFF</span></p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+    </div>
+
+</body>
+</html>

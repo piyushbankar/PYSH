@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PYSH</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Header */
+        .header {
+            background-color: black;
+            color: white;
+            text-align: center;
+            width: 100%;
+            height: 25vh; /* 25% height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* PYSH Styling with Copperplate Font */
+        .header h1 {
+            font-size: 80px; /* Bigger font */
+            font-weight: bold; /* Bold */
+            letter-spacing: 5px; /* Letter spacing */
+            font-family: "Copperplate", "Copperplate Gothic Light", sans-serif; /* Copperplate font */
+            margin: 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: -250px; /* Hidden initially */
+            background-color: #111;
+            padding-top: 20px;
+            transition: 0.3s;
+        }
+
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        /* Menu Button */
+        .menu-btn {
+            font-size: 25px;
+            cursor: pointer;
+            color: white;
+            position: absolute;
+            left: 20px;
+            top: 15px;
+            background: none;
+            border: none;
+        }
+
+        /* Content Area */
+        .content {
+            margin-left: 0;
+            transition: 0.3s;
+            width: 100%;
+            height: 75vh;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <h1>PYSH</h1>
+    </div>
+
+  <div class="sidebar" id="sidebar">
+    <a href="home.html" target="content-frame" onclick="closeMenu()">Home</a>
+    <a href="login.html" target="content-frame" onclick="closeMenu()">User Login</a>
+    <a href="new-collection.html" target="content-frame" onclick="closeMenu()">New Collection</a>
+    <a href="about.html" target="content-frame" onclick="closeMenu()">About</a> <!-- New About Section -->
+</div>
+
+    <div class="content">
+        <iframe name="content-frame" src="home.html"></iframe>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            let sidebar = document.getElementById("sidebar");
+            sidebar.style.left = sidebar.style.left === "0px" ? "-250px" : "0px";
+        }
+
+        function closeMenu() {
+            document.getElementById("sidebar").style.left = "-250px";
+        }
+    </script>
+</body>
+</html>
