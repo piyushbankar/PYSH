@@ -3,116 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - PYSH</title>
+    <title>Home - PYSH Clothing</title>
     <style>
         body {
-            background-color: #FFFACD; /* Light Yellow Background */
             font-family: Arial, sans-serif;
+            background-color: lightyellow;
             margin: 0;
             padding: 0;
-            text-align: center;
         }
 
-        .header {
-            font-size: 2rem;
-            font-weight: bold;
+        .container {
+            display: flex;
+            justify-content: space-between;
             padding: 20px;
         }
 
-        .clothing-section {
+        .products {
+            width: 70%;
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
             gap: 20px;
-            padding: 20px;
         }
 
-        .clothing-item {
-            background-color: white;
-            width: 250px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            padding: 10px;
-        }
-
-        .clothing-item img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .clothing-item h3 {
-            margin: 10px 0;
-            font-size: 18px;
-        }
-
-        .price {
-            color: #ff5733;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .old-price {
-            text-decoration: line-through;
-            color: gray;
-            font-size: 14px;
-        }
-
-        .discount {
-            color: green;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .add-to-cart {
-            background-color: #4CAF50;
-            color: white;
-            padding: 8px;
-            margin-top: 10px;
-            border: none;
+        .product {
+            background: white;
+            padding: 15px;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            width: 200px;
+            text-align: center;
         }
 
-        .add-to-cart:hover {
-            background-color: #45a049;
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
         }
+
+        .product button {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .cart {
+            width: 25%;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .cart h2 {
+            text-align: center;
+        }
+
+        .cart-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cart-items li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .cart-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="header">Welcome to PYSH Store</div>
+    <div class="container">
+        <!-- Product Section -->
+        <div class="products">
+            <div class="product">
+                <img src="Shirt1.jpeg.jpg" alt="Shirt 1">
+                <h3>Black T-Shirt</h3>
+                <p>₹499</p>
+                <button onclick="addToCart('Black T-Shirt', 499)">Add to Cart</button>
+            </div>
 
-    <div class="clothing-section">
-        <div class="clothing-item">
-            <img src="Shirt1.jpeg" alt="Shirt 1">
-            <h3>Ivory Dobby Striped Shirt</h3>
-            <p class="price">₹659 <span class="old-price">₹1,649</span> <span class="discount">60% OFF</span></p>
-            <button class="add-to-cart">Add to Cart</button>
+            <div class="product">
+                <img src="Shirt2.jpg" alt="Shirt 2">
+                <h3>White Hoodie</h3>
+                <p>₹799</p>
+                <button onclick="addToCart('White Hoodie', 799)">Add to Cart</button>
+            </div>
+
+            <!-- Add more products as needed -->
         </div>
 
-        <div class="clothing-item">
-            <img src="Shirt2.jpeg" alt="Shirt 2">
-            <h3>Tea Green Horizontal Striped Shirt</h3>
-            <p class="price">₹659 <span class="old-price">₹1,649</span> <span class="discount">60% OFF</span></p>
-            <button class="add-to-cart">Add to Cart</button>
-        </div>
-
-        <div class="clothing-item">
-            <img src="shirt3.jpeg" alt="Shirt 3">
-            <h3>Beige Ethnic Pattern Shirt</h3>
-            <p class="price">₹799 <span class="old-price">₹1,999</span> <span class="discount">60% OFF</span></p>
-            <button class="add-to-cart">Add to Cart</button>
-        </div>
-
-        <div class="clothing-item">
-            <img src="shirt4.jpeg" alt="Shirt 4">
-            <h3>Pink Striped Shirt</h3>
-            <p class="price">₹699 <span class="old-price">₹1,799</span> <span class="discount">60% OFF</span></p>
-            <button class="add-to-cart">Add to Cart</button>
+        <!-- Cart Section -->
+        <div class="cart">
+            <h2>🛒 Cart</h2>
+            <ul class="cart-items"></ul>
+            <p><strong>Total:</strong> ₹<span id="total">0</span></p>
         </div>
     </div>
+
+    <script>
+        let cartItems = [];
+        let totalAmount = 0;
+
+        function addToCart(itemName, price) {
+            cartItems.push({ name: itemName, price: price });
+            totalAmount += price;
+            updateCart();
+        }
+
+        function updateCart() {
+            let cartList = document.querySelector(".cart-items");
+            let totalDisplay = document.getElementById("total");
+            cartList.innerHTML = "";
+            
+            cartItems.forEach(item => {
+                let li = document.createElement("li");
+                li.textContent = `${item.name} - ₹${item.price}`;
+                cartList.appendChild(li);
+            });
+
+            totalDisplay.textContent = totalAmount;
+        }
+    </script>
 
 </body>
 </html>
