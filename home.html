@@ -12,6 +12,32 @@
             padding: 0;
         }
 
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: black;
+            color: white;
+            padding: 15px;
+        }
+
+        .cart-button {
+            position: relative;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 50%;
+        }
+
         .container {
             display: flex;
             justify-content: space-between;
@@ -73,23 +99,33 @@
             border-bottom: 1px solid #ccc;
         }
 
-        .cart-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 24px;
-            cursor: pointer;
+        .notification {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: green;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            display: none;
         }
 
     </style>
 </head>
 <body>
 
+    <div class="header">
+        <h1>PYSH Clothing</h1>
+        <div class="cart-button" onclick="showCart()">
+            🛒 Cart <span class="cart-badge" id="cartCount">0</span>
+        </div>
+    </div>
+
     <div class="container">
         <!-- Product Section -->
         <div class="products">
             <div class="product">
-                <img src="Shirt1.jpeg.jpg" alt="Shirt 1">
+                <img src="Shirt1.jpg" alt="Shirt 1">
                 <h3>Black T-Shirt</h3>
                 <p>₹499</p>
                 <button onclick="addToCart('Black T-Shirt', 499)">Add to Cart</button>
@@ -101,33 +137,41 @@
                 <p>₹799</p>
                 <button onclick="addToCart('White Hoodie', 799)">Add to Cart</button>
             </div>
-
-            <!-- Add more products as needed -->
         </div>
 
         <!-- Cart Section -->
-        <div class="cart">
-            <h2>🛒 Cart</h2>
+        <div class="cart" id="cartSection" style="display: none;">
+            <h2>🛒 Your Cart</h2>
             <ul class="cart-items"></ul>
             <p><strong>Total:</strong> ₹<span id="total">0</span></p>
         </div>
     </div>
 
+    <!-- Notification -->
+    <div class="notification" id="cartNotification">
+        Item added to cart! <button onclick="goToCart()">Go to Cart</button>
+    </div>
+
     <script>
         let cartItems = [];
         let totalAmount = 0;
+        let cartCount = 0;
 
         function addToCart(itemName, price) {
             cartItems.push({ name: itemName, price: price });
             totalAmount += price;
+            cartCount++;
+
             updateCart();
+            showNotification();
         }
 
         function updateCart() {
             let cartList = document.querySelector(".cart-items");
             let totalDisplay = document.getElementById("total");
+            let cartBadge = document.getElementById("cartCount");
+
             cartList.innerHTML = "";
-            
             cartItems.forEach(item => {
                 let li = document.createElement("li");
                 li.textContent = `${item.name} - ₹${item.price}`;
@@ -135,6 +179,24 @@
             });
 
             totalDisplay.textContent = totalAmount;
+            cartBadge.textContent = cartCount;
+        }
+
+        function showCart() {
+            let cartSection = document.getElementById("cartSection");
+            cartSection.style.display = cartSection.style.display === "none" ? "block" : "none";
+        }
+
+        function showNotification() {
+            let notification = document.getElementById("cartNotification");
+            notification.style.display = "block";
+            setTimeout(() => {
+                notification.style.display = "none";
+            }, 3000);
+        }
+
+        function goToCart() {
+            document.getElementById("cartSection").style.display = "block";
         }
     </script>
 
