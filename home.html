@@ -66,11 +66,13 @@
             border-radius: 5px;
         }
 
-        .product button {
+        .quantity-control {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background-color: black;
             color: white;
             padding: 10px;
-            border: none;
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
@@ -83,6 +85,7 @@
             border-radius: 5px;
             box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
             position: relative;
+            display: none;
         }
 
         .cart h2 {
@@ -97,6 +100,9 @@
         .cart-items li {
             padding: 10px;
             border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .notification {
@@ -109,7 +115,6 @@
             padding: 10px;
             display: none;
         }
-
     </style>
 </head>
 <body>
@@ -124,23 +129,31 @@
     <div class="container">
         <!-- Product Section -->
         <div class="products">
-            <div class="product">
+            <div class="product" id="product1">
                 <img src="Shirt1.jpeg" alt="Shirt 1">
                 <h3>Black T-Shirt</h3>
                 <p>₹499</p>
-                <button onclick="addToCart('Black T-Shirt', 499)">Add to Cart</button>
+                <div class="quantity-control">
+                    <button onclick="updateCart('Black T-Shirt', 499, -1)">-</button>
+                    <span id="qty-Black T-Shirt">0</span>
+                    <button onclick="updateCart('Black T-Shirt', 499, 1)">+</button>
+                </div>
             </div>
 
-            <div class="product">
+            <div class="product" id="product2">
                 <img src="Shirt2.jpeg" alt="Shirt 2">
                 <h3>White Hoodie</h3>
                 <p>₹799</p>
-                <button onclick="addToCart('White Hoodie', 799)">Add to Cart</button>
+                <div class="quantity-control">
+                    <button onclick="updateCart('White Hoodie', 799, -1)">-</button>
+                    <span id="qty-White Hoodie">0</span>
+                    <button onclick="updateCart('White Hoodie', 799, 1)">+</button>
+                </div>
             </div>
         </div>
 
         <!-- Cart Section -->
-        <div class="cart" id="cartSection" style="display: none;">
+        <div class="cart" id="cartSection">
             <h2>🛒 Your Cart</h2>
             <ul class="cart-items"></ul>
             <p><strong>Total:</strong> ₹<span id="total">0</span></p>
@@ -153,33 +166,47 @@
     </div>
 
     <script>
-        let cartItems = [];
+        let cartItems = {};
         let totalAmount = 0;
         let cartCount = 0;
 
-        function addToCart(itemName, price) {
-            cartItems.push({ name: itemName, price: price });
-            totalAmount += price;
-            cartCount++;
+        function updateCart(itemName, price, change) {
+            if (!cartItems[itemName]) {
+                cartItems[itemName] = { price: price, quantity: 0 };
+            }
 
-            updateCart();
-            showNotification();
-        }
+            cartItems[itemName].quantity += change;
 
-        function updateCart() {
+            if (cartItems[itemName].quantity < 0) {
+                cartItems[itemName].quantity = 0;
+            }
+
+            // Update total cart count
+            cartCount = Object.values(cartItems).reduce((acc, item) => acc + item.quantity, 0);
+            
+            // Update total price
+            totalAmount = Object.values(cartItems).reduce((acc, item) => acc + item.quantity * item.price, 0);
+
+            // Update UI
+            document.getElementById("cartCount").textContent = cartCount;
+            document.getElementById("total").textContent = totalAmount;
+            document.getElementById(`qty-${itemName}`).textContent = cartItems[itemName].quantity;
+
+            // Update cart display
             let cartList = document.querySelector(".cart-items");
-            let totalDisplay = document.getElementById("total");
-            let cartBadge = document.getElementById("cartCount");
-
             cartList.innerHTML = "";
-            cartItems.forEach(item => {
-                let li = document.createElement("li");
-                li.textContent = `${item.name} - ₹${item.price}`;
-                cartList.appendChild(li);
+            Object.keys(cartItems).forEach(item => {
+                if (cartItems[item].quantity > 0) {
+                    let li = document.createElement("li");
+                    li.innerHTML = `${item} - ₹${cartItems[item].price} x ${cartItems[item].quantity}`;
+                    cartList.appendChild(li);
+                }
             });
 
-            totalDisplay.textContent = totalAmount;
-            cartBadge.textContent = cartCount;
+            // Show notification if item is added
+            if (change > 0) {
+                showNotification();
+            }
         }
 
         function showCart() {
